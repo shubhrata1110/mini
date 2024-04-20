@@ -4,6 +4,7 @@ import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import AddNewDoctor from "./components/AddNewDoctor";
 import Messages from "./components/Messages";
+import Rooms from "./components/Rooms";
 import Doctors from "./components/Doctors";
 import { Context } from "./main";
 import axios from "axios";
@@ -46,6 +47,7 @@ const App = () => {
         <Route path="/admin/addnew" element={<AddNewAdmin />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/doctors" element={<Doctors />} />
+        <Route path="/rooms" element={<Rooms />}/>
       </Routes>
       <ToastContainer position="top-center" />
     </Router>

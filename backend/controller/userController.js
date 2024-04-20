@@ -218,6 +218,6 @@ export const logoutPatient = catchAsyncErrors(async (req, res, next) => {
     })
     .json({
       success: true,
-      message: "Patient Logged Out Successfully.",
+      message: "Logged Out Successfully.",
     });
 });

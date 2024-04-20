@@ -30,21 +30,27 @@ const Navbar = () => {
   };
 
   return (
-    <>
+    <> <hr />
       <nav className={"container"}>
+    
         <div className="logo">
           <img src="/logo.png" alt="logo" className="logo-img" />
         </div>
+        
+        
         <div className={show ? "navLinks showmenu" : "navLinks"}>
           <div className="links">
             <Link to={"/"} onClick={() => setShow(!show)}>
               Home
             </Link>
             <Link to={"/appointment"} onClick={() => setShow(!show)}>
-              Appointment
+              Book A Room
             </Link>
             <Link to={"/about"} onClick={() => setShow(!show)}>
               About Us
+            </Link>
+            <Link to={"/"} onClick={() => setShow(!show)}>
+              Contact us
             </Link>
           </div>
           {isAuthenticated ? (
@@ -60,6 +66,7 @@ const Navbar = () => {
         <div className="hamburger" onClick={() => setShow(!show)}>
           <GiHamburgerMenu />
         </div>
+        
       </nav>
     </>
   );

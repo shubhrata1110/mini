@@ -7,7 +7,20 @@
   font-family: "Montserrat", sans-serif;
 }
 body {
-  background: #e5e5e5;
+  background: #f0f0f0;
+}
+.headingg {
+  display: flex;
+  flex: 1;
+  padding: 100;
+  font-size: 48px; /* Adjust heading font size */
+  font-weight: bold; /* Make the heading bold */
+  color: #802b2b; /* Heading text color */
+  padding: 0 100px;
+  padding-top: 100px;
+  text-align: center;
+  padding-bottom: 100px;
+  position: relative;
 }
 .btn {
   padding: 7px 20px;
@@ -64,7 +77,11 @@ h6 {
     font-weight: 900;
   }
 }
-.container {
+.carousel{
+  padding: 0 100px;
+  
+}
+.container .carousel {
   padding: 0 100px;
 }
 @media (max-width: 700px) {
@@ -72,15 +89,27 @@ h6 {
     padding: 0 20px;
   }
 }
-.hero {
+.hero, .carousel {
   display: flex;
   gap: 50px;
   padding-top: 120px;
   padding-bottom: 120px;
   position: relative;
 }
-.hero .banner {
+.hero .banner .carousel{
   flex: 1;
+  
+}
+.carousel .item {
+  height: 200px;
+}
+
+.item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 200px;
+    max-width: 200px;
 }
 .hero .banner h1,
 .hero .banner p {
@@ -150,7 +179,7 @@ h6 {
   }
 }
 .form-component {
-  padding-top: 40px;
+  padding-top: 100px;
   padding-bottom: 60px;
 }
 .form-component h2 {
@@ -427,29 +456,73 @@ footer .content div:last-child div svg {
   height: fit-content;
   font-weight: 700;
 }
+.control-container {
+  height: 360px;
+  margin: 0 auto;
+  width: 600px;
+}
 
+.img-container {
+  height: 100%;
+  margin: 0;
+}
+
+.img-caption {
+  color: #fff;
+  font-size: 1rem;
+  position: absolute;
+  bottom: 3rem;
+  width: 100%;
+  text-align: center;
+}
+
+.e-carousel .e-carousel-indicators .e-indicator-bars .e-indicator-bar.e-template .indicator {
+  background-color: #ececec;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  height: 0.5rem;
+  margin: 0.5rem;
+  width: 1.5rem;
+}
+
+.e-carousel .e-carousel-indicators .e-indicator-bars .e-indicator-bar.e-active .indicator {
+  background-color: #3c78ef;
+}
 /**********************************************************************************************************************/
+
+.header {
+  display: flex;
+  background: linear-gradient(#6616fc, #f394d3);
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 40px;
+  height: 80px;
+}
 nav {
   display: flex;
   width: 100%;
-  margin: 0 auto;
+  height: px;
+  margin: 0px;
   justify-content: space-between;
   position: absolute;
-  align-items: center;
+  align-items: right;
   border-bottom-right-radius: 7px;
   border-bottom-left-radius: 7px;
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
   z-index: 2;
+  background-color: rgb(255, 255, 255);
 }
 nav .logo {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: left;
   font-size: 2rem;
 }
 nav .navLinks {
-  flex: 2;
+  flex: 1;
 }
 nav .navLinks {
   display: flex;
@@ -481,6 +554,7 @@ nav .btn {
   font-size: 20px;
   font-weight: 600;
   z-index: 2;
+
 }
 nav .logoutBtn {
   background: linear-gradient(135deg, black, rgb(49, 49, 49));
