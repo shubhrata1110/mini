@@ -1,144 +1,285 @@
-//import './styles.css'
-import React, { useState } from 'react'
-import clsx from 'clsx'
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { Context } from "../main";
+import { Navigate } from "react-router-dom";
+import "./roomstyle.css";
 
-// const movies = [
-//   {
-//     name: 'Avenger',
-//     price: 10,
-//     occupied: [20, 21, 30, 1, 2, 8],
-//   },
-//   {
-//     name: 'Joker',
-//     price: 12,
-//     occupied: [9, 41, 35, 11, 65, 26],
-//   },
-//   {
-//     name: 'Toy story',
-//     price: 8,
-//     occupied: [37, 25, 44, 13, 2, 3],
-//   },
-//   {
-//     name: 'the lion king',
-//     price: 9,
-//     occupied: [10, 12, 50, 33, 28, 47],
-//   },
-// ]
 
-// const seats = Array.from({ length: 8 * 8 }, (_, i) => i)
+const Rooms = () => {
+  const [rooms, setRooms] = useState([]);
 
-export default function Rooms() {
-//   const [selectedMovie, setSelectedMovie] = useState(movies[0])
-//   const [selectedSeats, setSelectedSeats] = useState([])
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:4000/api/v1/room/getall",
+          { withCredentials: true }
+        );
+        setRooms(data.rooms);
+        console.log(rooms);
+      } catch (error) {
+     
+        setRooms([]);
+      }
+    };
+    fetchRooms();
+  }, []);
 
-  return (
-    <div><p>hello</p></div>
-//     <div className="App">
-//       <Movies
-//         movie={selectedMovie}
-//         onChange={movie => {
-//           setSelectedSeats([])
-//           setSelectedMovie(movie)
-//         }}
-//       />
-//       <ShowCase />
-//       <Cinema
-//         movie={selectedMovie}
-//         selectedSeats={selectedSeats}
-//         onSelectedSeatsChange={selectedSeats => setSelectedSeats(selectedSeats)}
-//       />
 
-//       <p className="info">
-//         You have selected <span className="count">{selectedSeats.length}</span>{' '}
-//         seats for the price of{' '}
-//         <span className="total">
-//           {selectedSeats.length * selectedMovie.price}$
-//         </span>
-//       </p>
-//     </div>
-//   )
+  const handleUpdateCurrRoomStatus = async (roomId, roomCurrStatus) => {
+    
+    try {
+      const { data } = await axios.put(
+        `http://localhost:4000/api/v1/room/update/${roomId}`,
+        { roomCurrStatus},
+        { withCredentials: true }
+      );
+      setRooms((prev) =>
+      prev.map((room) =>
+          room._id === roomId
+            ? { ...room, roomCurrStatus }
+            : room
+        )
+      );
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+ 
+  return(
+    <table>
+    <thead>
+      <tr>
+        <th>ROOM NAME</th>
+        <th>ROOM STATUS</th>
+        <th>CHECKOUT DATE</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      {rooms && rooms.length > 0
+        ? rooms.map((r) => (
+
+            <tr key={r._id}>
+              <td>{`${r.roomName}`}</td>
+              <td> <select
+                          className={
+                            r.roomCurrStatus === "vacant"
+                              ? "value-vacant"
+                              : "value-occupied"
+                          }
+                          value={r.roomCurrStatus}
+                          onChange={(e) =>
+                            handleUpdateCurrRoomStatus(r._id, e.target.value)
+                          }
+                        >
+                          <option value="vacant" className="value-vacant">
+                           vacant
+                          </option>
+                         
+                          <option value="occupied" className="value-occupied">
+                            occupied
+                          </option>
+                        </select>
+                      </td>
+                      <td> <input type="date"></input>
+                          
+                         
+                      </td>
+          
+             </tr> 
+             
+          ))
+        : "No Appointments Found!"}
+    </tbody>
+  </table>
+
+
+
+
+
+//     <table>
+//       <tbody>
+//         {rooms && rooms.length > 0
+//                 ? rooms.map((room) => ( 
+//                     <tr key={room._id}>
+//                       <td>{`${room.roomName}`}</td>
+//                       <td>{`${room.roomCurrStatus}`}</td>
+//                       <td>
+//         <select  value={room.roomId}onChange={(e) =>
+//                             handleUpdateCurrRoomStatus(room._id, e.target.value)}>
+//           <option value="vacant">vacant</option>
+//           <option value="occupied">occupied</option>
+//         </select>
+//       </td>
+//                       </tr>
+//                  ))
+
+//                 : "No room found!"
 // }
 
-// function Movies({ movie, onChange }) {
-//   return (
-//     <div className="Movies">
-//       <label htmlFor="movie">Pick a movie</label>
-//       <select
-//         id="movie"
-//         value={movie.name}
-//         onChange={e => {
-//           onChange(movies.find(movie => movie.name === e.target.value))
-//         }}
-//       >
-//         {movies.map(movie => (
-//           <option key={movie.name} value={movie.name}>
-//             {movie.name} (${movie.price})
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-//   )
-// }
 
-// function ShowCase() {
-//   return (
-//     <ul className="ShowCase">
-//       <li>
-//         <span className="seat" /> <small>N/A</small>
-//       </li>
-//       <li>
-//         <span className="seat selected" /> <small>Selected</small>
-//       </li>
-//       <li>
-//         <span className="seat occupied" /> <small>Occupied</small>
-//       </li>
-//     </ul>
-//   )
-// }
+//       </tbody>
+//     </table>
+              )
+             
+            };
+            
+            export default Rooms;
+            
+      {/* <tr>
+        <td>Room 1</td>
+        <td>Room 2</td>
+        <td>Room 3</td>
+        <td>Room 4</td>
+        <td>Room 5</td>
+        
+      </tr>
+       <tr>
+      <td>
+        <select  value={room.roomId}onChange={(e) =>
+                            handleUpdateRoomStatus(appointment._id, e.target.value)}>
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td> <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td> <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      </tr> */}
+      {/* <tr>
+        <td>Room 6</td>
+        <td>Room 7</td>
+        <td>Room 8</td>
+        <td>Room 9</td>
+        <td>Room 10</td>
 
-// function Cinema({ movie, selectedSeats, onSelectedSeatsChange }) {
-//   function handleSelectedState(seat) {
-//     const isSelected = selectedSeats.includes(seat)
-//     if (isSelected) {
-//       onSelectedSeatsChange(
-//         selectedSeats.filter(selectedSeat => selectedSeat !== seat),
-//       )
-//     } else {
-//       onSelectedSeatsChange([...selectedSeats, seat])
-//     }
-//   }
+      </tr>
+      <tr>
+      <td>
+        <select className="value-accepted">room1
+          <option value="vacant" >vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td> <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td> <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      </tr>
+      <tr>
+        <td>Room 11</td>
+        <td>Room 12</td>
+        <td>Room 13</td>
+        <td>Room 14</td>
+        <td>Room 15</td>
 
-//   return (
-//     <div className="Cinema">
-//       <div className="screen" />
+      </tr>
+      <tr>
+      <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td> <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td> <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      </tr>
+      <tr>
+        <td>Room 16</td>
+        <td>Room 17</td>
+        <td>Room 18</td>
+        <td>Room 19</td>
+        <td>Room 20</td>
 
-//       <div className="seats">
-//         {seats.map(seat => {
-//           const isSelected = selectedSeats.includes(seat)
-//           const isOccupied = movie.occupied.includes(seat)
-//           return (
-//             <span
-//               tabIndex="0"
-//               key={seat}
-//               className={clsx(
-//                 'seat',
-//                 isSelected && 'selected',
-//                 isOccupied && 'occupied',
-//               )}
-//               onClick={isOccupied ? null : () => handleSelectedState(seat)}
-//               onKeyPress={
-//                 isOccupied
-//                   ? null
-//                   : e => {
-//                       if (e.key === 'Enter') {
-//                         handleSelectedState(seat)
-//                       }
-//                     }
-//               }
-//             />
-//           )
-//         })}
-//       </div>
-//     </div>
-  )
-}
+      </tr>
+      <tr>
+      <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td> <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td> <td>
+        <select name="" id="" value="1">room1
+          <option value="vacant">vacant</option>
+          <option value="occupied">occupied</option>
+        </select>
+      </td>
+      </tr> */}
+ 

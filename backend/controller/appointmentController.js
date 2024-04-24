@@ -116,7 +116,7 @@ export const postAppointment = catchAsyncErrors(async (req, res, next) => {
     numOfRooms, 
     purpose,
     patientId,
-    roomId
+   
 
   });
   res.status(200).json({

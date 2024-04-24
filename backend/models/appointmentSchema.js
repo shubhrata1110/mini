@@ -64,7 +64,9 @@ const appointmentSchema = new mongoose.Schema({
     
   },
   roomId:{
-    type:Number,
+    type:String,
+    enum: ["0","1","2","3"],
+    default: "0",
   },
   // appointment_date: {
   //   type: String,
