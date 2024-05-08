@@ -4,6 +4,13 @@ import { toast } from "react-toastify";
 import { Context } from "../main";
 import { Navigate } from "react-router-dom";
 import "./roomstyle.css";
+import { GoContainer } from "react-icons/go";
+
+
+
+
+
+
 
 
 const Rooms = () => {
@@ -49,9 +56,12 @@ const Rooms = () => {
   };
  
   return(
-    <table>
+    <div>
+      <center><h2 >ROOM VACANCY CHART</h2></center>
+    <table >
     <thead>
       <tr>
+        <th>Floor</th>
         <th>ROOM NAME</th>
         <th>ROOM STATUS</th>
         <th>CHECKOUT DATE</th>
@@ -59,10 +69,12 @@ const Rooms = () => {
       </tr>
     </thead>
     <tbody>
+     
       {rooms && rooms.length > 0
         ? rooms.map((r) => (
-
-            <tr key={r._id}>
+          
+            <tr>
+              <td>{`${r.floor}`}</td>
               <td>{`${r.roomName}`}</td>
               <td> <select
                           className={
@@ -96,7 +108,7 @@ const Rooms = () => {
     </tbody>
   </table>
 
-
+</div>
 
 
 

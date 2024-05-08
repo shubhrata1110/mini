@@ -12,11 +12,38 @@ body {
   font-family: 'Exo 2', sans-serif;
   background: white;
   color: white;
-  font-size: 15px;
+  font-size: 20px;
  align-items: center;
   min-height: 100vh;
   display: grid;
   place-items: center;
+}
+.container {
+  padding: 0 100px;
+}
+@media (max-width: 700px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+.hero .banner .carousel{
+  flex: 1;
+  
+}
+h2{
+  padding-bottom: 20px;
+}
+th{
+  border: #16a34a;
+  background-color: rgb(188, 208, 237);
+}
+table{
+  display:flexbox;
+  background-color: #fffefe;
+  border: 2px;
+  color: rgb(138, 138, 247);
+  column-rule-color: #49ca78;
+  border: 3px solid black;
 }
 
 .form-component form input,
@@ -30,9 +57,22 @@ body {
   border: 10px solid gray;
 }
 select{
-  padding-right: 10px;
+  margin-left: 20px;
   margin-right: 20px;
+  padding-right: 20px;
+  padding-left:20px;
+  padding-bottom: 20px;
   margin-bottom: 20px;
+}
+input{
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-right: 20px;
+  padding-left:20px;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+  align-items: center;
 }
  .value-pending {
   color: #eab308;
@@ -61,17 +101,29 @@ th{
   color: black;
   font-size: 20px;
   padding-bottom: 20px;
+  border: 3px solid black;
 }
 td{
   margin-left: 20px;
   margin-right: 20px;
   padding-right: 20px;
   padding-left:20px;
-  padding-bottom: 30px;
-  margin-bottom: 40px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border: 3px solid black;
+  
 }
 
+.grid-container{
+  display: grid;
+  gap: 50px 100px;
+  justify-content: space-around;
+}
+.grid-item{
+  grid-column-start: 1;
+  grid-column-end: 3;
 
+}
 .Rooms {
   text-align: center;
   display: flex;
