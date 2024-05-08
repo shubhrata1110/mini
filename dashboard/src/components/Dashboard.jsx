@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Context } from "../main";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
@@ -7,12 +7,21 @@ import { GoCheckCircleFill } from "react-icons/go";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { TiHome } from "react-icons/ti";
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
+import 'react-horizontal-scrolling-menu/dist/styles.css';
+import emailjs from '@emailjs/browser';
+
+
+   
+
+  
 const Dashboard = () => {
   
   const [appointments, setAppointments] = useState([]);
  const [show, setShow] = useState(false);
+ const form = useRef();
 
-
+  
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
@@ -47,6 +56,24 @@ const Dashboard = () => {
       toast.error(error.response.data.message);
     }
   };
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm('service_jk0pi0m', 'template_220prsn', form.current, {
+        publicKey: '9b6H3t2IUKK98LRTC',
+      })
+      .then(
+        () => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
+  };
+
+
   const handleUpdateRoomStatus = async (appointmentId, roomId) => {
     
     try {
@@ -78,6 +105,7 @@ const Dashboard = () => {
     setShow(!show);
   };
 
+ 
   return (
     <>
       <section className="dashboard page">
@@ -101,18 +129,20 @@ const Dashboard = () => {
           </div>
           <div className="secondBox">
             {/* <button  onClick={goToRoomPage}>See Room Chart</button> */}
-            <div className="links">
-            <TiHome onClick={goToRoomPage} />see room Chart
-            </div>
+          
+            <center> <button className="roompagebutton" onClick={goToRoomPage} >see room Chart</button> </center>
+            
           </div>
-          <div className="thirdBox">
-            <p>send link to incharge</p>
-            <h3>10</h3>
+          <div className="secondBox">
+          <form ref={form} onSubmit={sendEmail}>
+          <center><input type="submit" value="Notify In-Charge" /></center>
+          </form>
           </div>
         </div>
-        
         <div className="banner">
-          <h5>Bookings</h5>
+           <h5>Bookings</h5>
+        
+         
           <table>
             <thead>
               <tr>
@@ -180,7 +210,7 @@ const Dashboard = () => {
                           </option>
                         </select>
                       </td>
-                      <td>{appointment.hasVisited === true ? <GoCheckCircleFill className="green"/> : <AiFillCloseCircle className="red"/>}</td>
+                     
                     </tr>
                   ))
                 : "No Appointments Found!"}
@@ -188,7 +218,7 @@ const Dashboard = () => {
           </table>
 
           
-        </div>
+          </div>
       </section>
     </>
   );
