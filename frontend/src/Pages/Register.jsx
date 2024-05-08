@@ -11,7 +11,7 @@ const Register = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [nic, setNic] = useState("");
+  const [adhaarno, setadhaarno] = useState("");
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +24,7 @@ const Register = () => {
       await axios
         .post(
           "http://localhost:4000/api/v1/user/patient/register",
-          { firstName, lastName, email, phone, nic, dob, gender, password },
+          { firstName, lastName, email, phone, adhaarno, dob, gender, password },
           {
             withCredentials: true,
             headers: { "Content-Type": "application/json" },
@@ -38,7 +38,7 @@ const Register = () => {
           setLastName("");
           setEmail("");
           setPhone("");
-          setNic("");
+          setadhaarno("");
           setDob("");
           setGender("");
           setPassword("");
@@ -57,10 +57,7 @@ const Register = () => {
       <div className="container form-component register-form">
         <h2>Sign Up</h2>
         <p>Please Sign Up To Continue</p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat culpa
-          voluptas expedita itaque ex, totam ad quod error?
-        </p>
+      
         <form onSubmit={handleRegistration}>
           <div>
             <input
@@ -93,9 +90,9 @@ const Register = () => {
           <div>
             <input
               type="number"
-              placeholder="NIC"
-              value={nic}
-              onChange={(e) => setNic(e.target.value)}
+              placeholder="adhaarno"
+              value={adhaarno}
+              onChange={(e) => setadhaarno(e.target.value)}
             />
             <input
               type={"date"}

@@ -19,7 +19,7 @@ const Login = () => {
       await axios
         .post(
           "http://localhost:4000/api/v1/user/login",
-          { email, password, confirmPassword, role: "Patient" },
+          { email, password, confirmPassword, role: "Guest" },
           {
             withCredentials: true,
             headers: { "Content-Type": "application/json" },
@@ -47,10 +47,7 @@ const Login = () => {
       <div className="container form-component login-form">
         <h2>Sign In</h2>
         <p>Please Login To Continue</p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat culpa
-          voluptas expedita itaque ex, totam ad quod error?
-        </p>
+       
         <form onSubmit={handleLogin}>
           <input
             type="text"

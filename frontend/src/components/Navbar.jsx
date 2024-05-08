@@ -46,12 +46,7 @@ const Navbar = () => {
             <Link to={"/appointment"} onClick={() => setShow(!show)}>
               Book A Room
             </Link>
-            <Link to={"/about"} onClick={() => setShow(!show)}>
-              About Us
-            </Link>
-            <Link to={"/"} onClick={() => setShow(!show)}>
-              Contact us
-            </Link>
+           
           </div>
           {isAuthenticated ? (
             <button className="logoutBtn btn" onClick={handleLogout}>
